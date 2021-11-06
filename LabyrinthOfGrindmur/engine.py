@@ -49,9 +49,10 @@ class Engine:
         self.game_map.render(console)
 
         for entity in self.entities:
-            # Only print entities that are in the FOV
-            if self.game_map.visible[entity.x, entity.y]:
-                console.print(entity.x, entity.y, entity.char, fg=entity.color)
+            if entity == self.player:
+                # Only print entities that are in the FOV
+                if self.game_map.visible[entity.x, entity.y]:
+                    console.print(entity.x, entity.y, entity.char, fg=entity.color)
 
         # context.present(console, integer_scaling=True)
         # console.clear()
@@ -61,7 +62,8 @@ class Engine:
         self.game_map.render_light(console)
 
         for entity in self.entities:
-            console.print(entity.x, entity.y, entity.char, fg=entity.color)
+            if entity == self.npc:
+                console.print(entity.x, entity.y, entity.char, fg=entity.color)
 
         # context.present(console, integer_scaling=True)
         # console.clear()

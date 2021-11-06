@@ -47,6 +47,6 @@ class RectangularRoom:
     def generate_map(map_width, map_height, x, y, room_width, room_height) -> GameMap:
         game_map = GameMap(map_width, map_height)
         game_map.tiles[RectangularRoom.generate_room(x, y, room_width, room_height).inner] = \
-            RectangularRoom.generate_maze(room_width, room_height)
+            RectangularRoom.maze
 
         return game_map
