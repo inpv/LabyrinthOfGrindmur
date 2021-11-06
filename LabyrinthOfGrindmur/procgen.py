@@ -4,6 +4,9 @@ from mazegen import MazeGen
 
 
 class RectangularRoom:
+
+    maze = None
+
     def __init__(self, x: int, y: int, width: int, height: int):
         self.x1 = x
         self.y1 = y
@@ -22,16 +25,28 @@ class RectangularRoom:
         """Return the inner area of this room as a 2D array index."""
         return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
 
+    # SAME ENGINE RENDERS DIFFERENT ROOMS DIFFERENTLY
+    # two rooms with different params
+    # engine chooses, which room to render, based on them
+
     @staticmethod
-    def generate_dungeon(map_width, map_height) -> GameMap:
-        dungeon = GameMap(map_width, map_height)
+    def generate_room(x, y, room_width, room_height):
+        room = RectangularRoom(x=x, y=y, width=room_width, height=room_height)
 
-        room_1 = RectangularRoom(x=20, y=15, width=14, height=14)
-        room_2 = RectangularRoom(x=35, y=15, width=14, height=14)
+        return room
 
-        maze = MazeGen.main(MazeGen(13, 13))  # pass the maze grid here
+    @staticmethod
+    def generate_maze(room_width, room_height):
+        maze_width = room_width - 1
+        maze_height = room_height - 1
+        RectangularRoom.maze = MazeGen.main(MazeGen(maze_width, maze_height))
 
-        dungeon.tiles[room_1.inner] = maze
-        dungeon.tiles[room_2.inner] = maze
+        return RectangularRoom.maze
 
-        return dungeon
+    @staticmethod
+    def generate_map(map_width, map_height, x, y, room_width, room_height) -> GameMap:
+        game_map = GameMap(map_width, map_height)
+        game_map.tiles[RectangularRoom.generate_room(x, y, room_width, room_height).inner] = \
+            RectangularRoom.generate_maze(room_width, room_height)
+
+        return game_map

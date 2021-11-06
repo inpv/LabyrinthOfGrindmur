@@ -6,6 +6,8 @@ class MazeGen:
 
     cell = tile_types.floor
     wall = tile_types.wall
+    exit_door = tile_types.exit_door
+    entrance_door = tile_types.entrance_door
     maze = []
 
     def __init__(self, width, height):
@@ -80,6 +82,8 @@ class MazeGen:
         conv = {
             1: MazeGen.wall,
             0: MazeGen.cell,
+            2: MazeGen.exit_door,
+            3: MazeGen.entrance_door
         }
 
         for y in range(0, self.height):
@@ -98,6 +102,11 @@ class MazeGen:
                 if self.grid[y][self.width-1] == 0 or self.grid[y][self.width-1] == 1:
                     self.grid[y][self.width-1] = 2
                 """
+                if self.grid[self.height-1][self.width - 1] == 0:
+                    self.grid[self.height-1][self.width - 1] = 2
+
+                if self.grid[0][0] == 0:
+                    self.grid[0][0] = 3
 
                 MazeGen.maze[y][x] = (conv[self.grid[y][x]])
 
