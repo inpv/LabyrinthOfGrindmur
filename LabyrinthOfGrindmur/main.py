@@ -28,7 +28,6 @@ def main() -> None:
 
     event_handler = EventHandler()
 
-    RectangularRoom.maze = RectangularRoom.generate_maze(14, 14)
     left_room = RectangularRoom.generate_map(int(map_width / 2), map_height, 0, 15, 14, 14)
     right_room = RectangularRoom.generate_map(int(map_width / 2), map_height, 20, 15, 14, 14)
 
