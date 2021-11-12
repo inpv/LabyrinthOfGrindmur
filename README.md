@@ -5,3 +5,4 @@
 <p>The player has to solve the maze with limited visibility (Field of View) before the rival AI finds a way out of the same maze. However, the player is able to see the full enemy's map.</p>
 <p>The mazes are identical and have traps as well as buffs, which affect movement speed. Difficulty levels affect the chance of their spawning.</p>
 <p>The game itself is turn-based, like most classic roguelikes.</p>
+<img src="https://user-images.githubusercontent.com/68565248/141386974-578efaaa-87a4-4288-befd-28f12f1c0382.png" title="A screenshot from the game" alt="A screenshot from the game">
