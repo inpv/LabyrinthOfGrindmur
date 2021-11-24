@@ -1,8 +1,4 @@
 import config
-from mazegen import MazeGen
-
-# CPP program to solve Rat in a maze
-# problem with backtracking using stack
 
 
 class Node:

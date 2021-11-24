@@ -1,5 +1,4 @@
 import tcod
-import config
 import tcod.event
 import copy
 import entity_factories
