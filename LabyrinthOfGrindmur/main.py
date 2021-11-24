@@ -1,8 +1,10 @@
 import tcod
+import config
 import tcod.event
-from engine import Engine
-from entity import Entity
+import copy
+import entity_factories
 from input_handlers import EventHandler
+from engine import Engine
 from procgen import RectangularRoom
 
 FLAGS = tcod.context.SDL_WINDOW_RESIZABLE | tcod.context.SDL_WINDOW_MAXIMIZED
@@ -21,21 +23,15 @@ def main() -> None:
         "rexpaint_cp437_10x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
     )
 
-    player = Entity(1, 16, "@", (255, 255, 255))
-    npc = Entity(21, 16, "S", (255, 255, 0))
-
-    entities = {npc, player}
+    player = copy.deepcopy(entity_factories.player)
 
     event_handler = EventHandler()
 
-    left_room = RectangularRoom.generate_map(int(map_width / 2), map_height, 0, 15, 14, 14)
-    right_room = RectangularRoom.generate_map(int(map_width / 2), map_height, 20, 15, 14, 14)
+    left_room = RectangularRoom.generate_room(int(map_width / 2), map_height, 0, 15, 14, 14, player)
+    right_room = RectangularRoom.generate_room(int(map_width / 2), map_height, 20, 15, 14, 14, player)
 
-    engine_left = Engine(entities=entities, event_handler=event_handler, game_map=left_room, player=player, npc=npc)
-    engine_right = Engine(entities=entities, event_handler=event_handler, game_map=right_room, player=player, npc=npc)
-
-    # main engine renders entities and their actions, the two others render the rooms
-    # main engine and room engine
+    engine_left = Engine(event_handler=event_handler, game_map=left_room, player=player)
+    engine_right = Engine(event_handler=event_handler, game_map=right_room, player=player)
 
     # creating the window
     with tcod.context.new(  # New window with pixel resolution of width × height.
@@ -58,13 +54,6 @@ def main() -> None:
 
             console_left = tcod.Console(width=left_width, height=console_main.height, order="F")
             console_right = tcod.Console(width=right_width, height=console_main.height, order="F")
-
-            """
-            if console.width == left_width:
-                engine_left.render(console=console)
-            else if console.width == right_width:
-                engine_right.render_light(console=console)
-            """
 
             engine_left.render(console=console_left)
             engine_right.render_light(console=console_right)

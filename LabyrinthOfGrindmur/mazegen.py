@@ -1,4 +1,5 @@
 import random
+import config
 import tile_types
 
 
@@ -23,6 +24,8 @@ class MazeGen:
                      ]
 
         self.create_maze(x=0, y=0)
+
+        config.maze_raw = self.grid
 
     def set_path(self, x, y):
         self.grid[y][x] = 0
@@ -80,10 +83,10 @@ class MazeGen:
         MazeGen.maze = [[1 for y in range(self.height)] for x in range(self.width)]
 
         conv = {
-            1: MazeGen.wall,
             0: MazeGen.cell,
-            2: MazeGen.exit_door,
-            3: MazeGen.entrance_door
+            1: MazeGen.wall,
+            2: MazeGen.entrance_door,
+            3: MazeGen.exit_door
         }
 
         for y in range(0, self.height):
@@ -102,12 +105,15 @@ class MazeGen:
                 if self.grid[y][self.width-1] == 0 or self.grid[y][self.width-1] == 1:
                     self.grid[y][self.width-1] = 2
                 """
+
                 if self.grid[self.height-1][self.width - 1] == 0:
-                    self.grid[self.height-1][self.width - 1] = 2
+                    self.grid[self.height-1][self.width - 1] = 3
 
                 if self.grid[0][0] == 0:
-                    self.grid[0][0] = 3
+                    self.grid[0][0] = 2
 
                 MazeGen.maze[y][x] = (conv[self.grid[y][x]])
+
+                config.maze_transformed = MazeGen.maze[y][x]
 
         return MazeGen.maze

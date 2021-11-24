@@ -1,11 +1,13 @@
+import config
+import random
 from typing import Tuple
 from game_map import GameMap
 from mazegen import MazeGen
+from entity import Entity
+import entity_factories
 
 
 class RectangularRoom:
-
-    maze = None
 
     def __init__(self, x: int, y: int, width: int, height: int):
         self.x1 = x
@@ -30,24 +32,39 @@ class RectangularRoom:
     # engine chooses, which room to render, based on them
 
     @staticmethod
-    def generate_room(x, y, room_width, room_height):
-        room = RectangularRoom(x=x, y=y, width=room_width, height=room_height)
-
-        return room
-
-    @staticmethod
-    def generate_maze(room_width, room_height):
+    def generate_maze(room_width, room_height):  # for each maze
         maze_width = room_width - 1
         maze_height = room_height - 1
-        RectangularRoom.maze = MazeGen.main(MazeGen(maze_width, maze_height))
+        config.maze_raw = MazeGen.main(MazeGen(maze_width, maze_height))
 
-        return RectangularRoom.maze
+        return config.maze_raw
 
     @staticmethod
-    def generate_map(map_width, map_height, x, y, room_width, room_height) -> GameMap:
-        game_map = GameMap(map_width, map_height)
-        RectangularRoom.maze = RectangularRoom.generate_maze(14, 14)
-        game_map.tiles[RectangularRoom.generate_room(x, y, room_width, room_height).inner] = \
-            RectangularRoom.maze
+    def place_entities(room, dungeon: GameMap) -> None:
+        x = random.randint(room.x1 + 1, room.x2 - 1)
+        y = random.randint(room.y1 + 1, room.y2 - 1)
+
+        entity_factories.npc.spawn(dungeon, 21, 16)  # test!!!
+
+        if not any(entity.x == x and entity.y == y for entity in dungeon.entities):
+
+            # entity_factories.npc.spawn(dungeon, x, y)
+
+            if random.random() < 0.8:
+                pass  # Place a buff there
+            else:
+                pass  # Place a debuff there
+
+    @staticmethod
+    def generate_room(map_width, map_height, x, y, room_width, room_height, player: Entity) -> GameMap:  # for each room
+
+        game_map = GameMap(map_width, map_height, entities=[player])
+        maze = RectangularRoom.generate_maze(14, 14)
+        room = RectangularRoom(x, y, room_width, room_height)
+
+        game_map.tiles[room.inner] = maze
+
+        RectangularRoom.place_entities(room, game_map)
 
         return game_map
+
