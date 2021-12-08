@@ -5,6 +5,13 @@ from game_map import GameMap
 from mazegen import MazeGen
 from entity import Entity
 import entity_factories
+import config
+import copy
+from typing import Optional, Tuple, TypeVar, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from engine import Engine
+    from entity import Entity
 
 
 class RectangularRoom:
@@ -44,7 +51,7 @@ class RectangularRoom:
         x = random.randint(room.x1 + 1, room.x2 - 1)
         y = random.randint(room.y1 + 1, room.y2 - 1)
 
-        entity_factories.npc.spawn(dungeon, 21, 16)  # test!!!
+        # entity_factories.npc.spawn(dungeon, 21, 16)  # test!!!
 
         if not any(entity.x == x and entity.y == y for entity in dungeon.entities):
 
@@ -56,9 +63,28 @@ class RectangularRoom:
                 pass  # Place a debuff there
 
     @staticmethod
-    def generate_room(map_width, map_height, x, y, room_width, room_height, player: Entity) -> GameMap:  # for each room
+    def generate_room(
+        map_width,
+        map_height,
+        x,
+        y,
+        room_width,
+        room_height,
+    ) -> GameMap:  # for each room
 
-        game_map = GameMap(map_width, map_height, entities=[player])
+        entity = None
+
+        # decide which entry to load unto the map based on the maps' coordinates
+
+        if x == 0:
+            config.player = copy.deepcopy(entity_factories.player)
+            entity = config.player
+        elif x == 20:
+            config.npc = copy.deepcopy(entity_factories.npc)
+            entity = config.npc
+
+        game_map = GameMap(map_width, map_height, entities=[entity])
+
         maze = RectangularRoom.generate_maze(14, 14)
         room = RectangularRoom(x, y, room_width, room_height)
 
