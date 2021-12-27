@@ -7,6 +7,8 @@ from actions import Action, EscapeAction, MovementAction
 if TYPE_CHECKING:
     from engine import Engine
 
+# event handler должен быть выше engine, и запрашивать у него уже измененный тип действий
+
 
 class EventHandler(tcod.event.EventDispatch[Action]):
 
@@ -33,7 +35,7 @@ class EventHandler(tcod.event.EventDispatch[Action]):
 
         key = event.sym
 
-        player = self.engine.player
+        player = config.player
 
         if key == tcod.event.K_w:
             action = MovementAction(dx=0, dy=-1, entity=player)  # movement instead of bump, later add take/open actions

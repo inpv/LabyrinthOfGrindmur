@@ -17,7 +17,7 @@ class Action:
     @property
     def game_map(self) -> GameMap:
         game_map = None
-        # """Return the engine this action belongs to."""
+        # """Return the game map this action belongs to."""
 
         if self.entity == config.player:
             game_map = config.left_room

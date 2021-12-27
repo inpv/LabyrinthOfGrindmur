@@ -12,9 +12,12 @@ T = TypeVar("T", bound="Entity")
 class Entity:
     """
     A generic object to represent players, enemies, items, etc.
+
+
+
     """
 
-    gamemap: GameMap
+    # gamemap: GameMap
 
     def __init__(
             self,

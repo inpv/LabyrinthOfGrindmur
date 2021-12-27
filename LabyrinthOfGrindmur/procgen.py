@@ -3,6 +3,7 @@ import random
 from typing import Tuple
 from game_map import GameMap
 from mazegen import MazeGen
+from mazesolve import MazeSolver
 from entity import Entity
 import entity_factories
 import config
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
     from entity import Entity
 
 
-class RectangularRoom:
+class Dungeon:
 
     def __init__(self, x: int, y: int, width: int, height: int):
         self.x1 = x
@@ -63,7 +64,7 @@ class RectangularRoom:
                 pass  # Place a debuff there
 
     @staticmethod
-    def generate_room(
+    def generate_room(  # РАЗОБРАТЬ ИМЕННО ЭТОТ МЕТОД
         map_width,
         map_height,
         x,
@@ -74,7 +75,7 @@ class RectangularRoom:
 
         entity = None
 
-        # decide which entry to load unto the map based on the maps' coordinates
+        # decide which entity to load unto the map based on the maps' coordinates
 
         if x == 0:
             config.player = copy.deepcopy(entity_factories.player)
@@ -85,12 +86,12 @@ class RectangularRoom:
 
         game_map = GameMap(map_width, map_height, entities=[entity])
 
-        maze = RectangularRoom.generate_maze(14, 14)
-        room = RectangularRoom(x, y, room_width, room_height)
+        maze = Dungeon.generate_maze(14, 14)
+        room = Dungeon(x, y, room_width, room_height)
 
         game_map.tiles[room.inner] = maze
 
-        RectangularRoom.place_entities(room, game_map)
+        Dungeon.place_entities(room, game_map)
 
         return game_map
 
