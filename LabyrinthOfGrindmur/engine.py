@@ -47,8 +47,6 @@ class Engine:
                 elif entity == config.npc:
                     pass
 
-                # test
-
     def render(self, console: Console) -> None:
 
         for game_map in self.game_maps:
