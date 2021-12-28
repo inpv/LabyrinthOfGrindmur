@@ -21,7 +21,6 @@ class Engine:
         self.game_maps = game_maps
 
         self.message_log = MessageLog()
-        self.counter = 0
 
     def handle_enemy_turns(self) -> None:
         for game_map in self.game_maps:
@@ -29,9 +28,7 @@ class Engine:
                 if entity == config.player:
                     pass
                 elif entity == config.npc:
-                    self.counter += 1
-                    print(f'The {entity.name} wonders when it will get to take a real turn.'
-                          + str(self.counter))
+                    print(f'The {entity.name} wonders when it will get to take a real turn.')
 
     def update_fov(self) -> None:
         # Recompute the visible area based on the players point of view.
