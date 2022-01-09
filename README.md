@@ -5,7 +5,7 @@
 <p>The player has to solve the maze with limited visibility (Field of View = 1 cell ahead) before the rival AI reaches the end of its own maze. However, the player is able to see the full enemy's map and thus may predict their moves.</p>
 <p>The mazes are procedurally generated (originally by Recursive Backtracking, but one can use any maze generation algorithm that yields a 2d array of wall/maze to be converted later into tiles) and have traps as well as buffs, which affect movement speed. Difficulty levels affect their chance of spawning.</p>
 <p>The game itself is turn-based, like most classic roguelikes. Whoever starts traversing through the maze first is decided randomly.</p>
-<p>The AI finds a solution for the maze using Recursive Backtracking algorithm (again, any can be used as long as it they can find a way in a perfect maze) and then starts moving through the map using the generated way. Any obstacles or buffs met are counted for the enemy as they traverse the maze as well.</p>
+<p>The AI finds a solution for the maze using Recursive Backtracking algorithm (again, any can be used as long as it can find a way in a perfect maze) and then starts moving through the map using the generated way. Any obstacles or buffs met are counted for the enemy as they traverse the maze as well.</p>
 <img src="https://user-images.githubusercontent.com/68565248/141439637-abd4c415-540b-479e-bfce-bc90c4438c61.png" title="A screenshot from the game" alt="A screenshot from the game">
 
 <p><b>The story</b></p>
