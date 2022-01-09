@@ -17,4 +17,4 @@
 <p>Thus, time is running out quickly for the Elven King leading whatever is left of his squad to find reinforcements. If he succeeds before Larutiore finds Grindmur, the elves have a chance, otherwise their world is completely and utterly doomed.</p>
 
 <p><b>Status on 09.01.22</b></p>
-<p>The game itself is fully playable in PyCharm but the enemy doesn't move yet.</p>
+<p>The game itself is playable in PyCharm but the enemy doesn't move yet.</p>
