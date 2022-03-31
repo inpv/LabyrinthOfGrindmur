@@ -1,5 +1,4 @@
 # globals shared between functions
-# all are static
 
 maze_raw = []
 maze_transformed = []
@@ -10,3 +9,8 @@ right_room = None
 
 player = None
 npc = None
+
+maze_counter = 0
+
+maze_left = []
+maze_right = []

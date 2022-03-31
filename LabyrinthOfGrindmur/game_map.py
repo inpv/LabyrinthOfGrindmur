@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from entity import Entity
 
 
-class GameMap:  # не нужен второй engine, нужны две карты
+class GameMap:
     def __init__(
             self, width: int, height: int, entities: Iterable[Entity] = ()
     ):

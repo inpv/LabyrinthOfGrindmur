@@ -16,11 +16,17 @@ class Engine:
 
     def __init__(self, entities: List[Entity], game_maps: List[GameMap]):
         self.event_handler: EventHandler = EventHandler(self)
-
         self.entities = entities
         self.game_maps = game_maps
-
         self.message_log = MessageLog()
+
+    @staticmethod
+    def increment_enemy_movement(entity):
+        if config.maze_path:
+            temp = config.maze_path.pop(0)
+            entity.place(temp.x+21, temp.y+16)
+        else:
+            print("No more paths")
 
     def handle_enemy_turns(self) -> None:
         for game_map in self.game_maps:
@@ -28,7 +34,8 @@ class Engine:
                 if entity == config.player:
                     pass
                 elif entity == config.npc:
-                    print(f'The {entity.name} wonders when it will get to take a real turn.')
+                    Engine.increment_enemy_movement(entity)
+                break
 
     def update_fov(self) -> None:
         # Recompute the visible area based on the players point of view.

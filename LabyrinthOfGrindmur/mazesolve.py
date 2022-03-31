@@ -1,6 +1,3 @@
-import config
-
-
 class Node:
     def __init__(self, i, j):
         self.x = i
@@ -12,7 +9,7 @@ class MazeSolver:
 
     maze_solve_stack = []
 
-    # Food coordinates (fx and fy): (len(maze) - 1), (len(maze[0]) - 1)
+    # End coordinates (fx and fy): (len(maze) - 1), (len(maze[0]) - 1)
 
     @staticmethod
     def is_reachable(maze_arr, fx, fy):
@@ -97,6 +94,8 @@ class MazeSolver:
         return False
 
     @staticmethod
-    def generate_path():
-        for node in MazeSolver.maze_solve_stack:
-            config.maze_path.append(node)
+    def solve_maze(maze_arr):
+        if MazeSolver.is_reachable(maze_arr, len(maze_arr) - 1, len(maze_arr[0]) - 1):
+            return MazeSolver.maze_solve_stack
+        else:
+            pass
