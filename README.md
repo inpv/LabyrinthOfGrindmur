@@ -18,3 +18,6 @@
 
 <p><b>Status on 09.01.22</b></p>
 <p>The game itself is playable in PyCharm but the enemy doesn't move yet.</p>
+
+<p><b>Status on 31.03.22</b></p>
+<p>The alpha is fully playable, both in PyCharm and in the build.</p>
