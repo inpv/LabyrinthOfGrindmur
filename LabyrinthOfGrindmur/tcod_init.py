@@ -1,3 +1,5 @@
+import os
+import sys
 import tcod
 import tcod.event
 import color
@@ -23,7 +25,7 @@ class Tcod:
         # loading tileset
 
         self.tileset = tcod.tileset.load_tilesheet(
-            "rexpaint_cp437_10x10.png", 16, 16, tcod.tileset.CHARMAP_CP437
+            Tcod.get_path("rexpaint_cp437_10x10.png"), 16, 16, tcod.tileset.CHARMAP_CP437
         )
 
         # generating maps with entities
@@ -46,8 +48,15 @@ class Tcod:
         # displaying messages
 
         self.engine.message_log.add_message(
-            "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
+            "Welcome to the Labyrinth Of Grindmur", color.welcome_text
         )
+
+    @staticmethod
+    def get_path(filename):
+        if hasattr(sys, "_MEIPASS"):
+            return os.path.join(sys._MEIPASS, filename)
+        else:
+            return filename
 
     def create_window(self):
         # creating the window
