@@ -22,21 +22,36 @@ class Tcod:
         self.map_width = 72
         self.map_height = 38
 
+        self.tileset_columns = 16
+        self.tileset_rows = 16
+
+        config.room_width = 14
+        config.room_height = 14
+
+        config.room_x_coord = 0
+        config.room_y_coord = 15
+
         # loading tileset
 
         self.tileset = tcod.tileset.load_tilesheet(
-            Tcod.get_path("rexpaint_cp437_10x10.png"), 16, 16, tcod.tileset.CHARMAP_CP437
+            Tcod.get_path("rexpaint_cp437_10x10.png"),
+            self.tileset_columns,
+            self.tileset_rows,
+            tcod.tileset.CHARMAP_CP437
         )
 
         # generating maps with entities
 
         config.left_room = Dungeon.generate_room(
             int(self.map_width / 2),
-            self.map_height, 0, 15, 14, 14)
+            self.map_height, config.room_x_coord, config.room_y_coord, config.room_width, config.room_height)
+
+        if config.left_room:
+            config.room_x_coord += 20  # moving the enemy labyrinth to the right
 
         config.right_room = Dungeon.generate_room(
             int(self.map_width / 2),
-            self.map_height, 20, 15, 14, 14)
+            self.map_height, config.room_x_coord, config.room_y_coord, config.room_width, config.room_height)
 
         # initializing engine
 
@@ -85,7 +100,8 @@ class Tcod:
                 self.engine.render_light(console=console_right)
 
                 console_left.blit(console_main, dest_x=0, dest_y=0, width=left_width, height=self.screen_height)
-                console_right.blit(console_main, dest_x=right_width, dest_y=0, width=right_width, height=self.screen_height)
+                console_right.blit(
+                    console_main, dest_x=right_width, dest_y=0, width=right_width, height=self.screen_height)
 
                 context.present(console_main, keep_aspect=False, integer_scaling=True)
                 console_main.clear()

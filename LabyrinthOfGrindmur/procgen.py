@@ -66,8 +66,8 @@ class Dungeon:
     def generate_room(  # generates each room turnkey, with all the bells and whistles
         map_width,
         map_height,
-        x,
-        y,
+        room_x_coord,
+        room_y_coord,
         room_width,
         room_height,
     ) -> GameMap:
@@ -77,10 +77,10 @@ class Dungeon:
 
         # decide which entity to load unto the game map based on the maps' coordinates
 
-        if x == 0:
+        if room_x_coord == 0:
             config.player = copy.deepcopy(entity_factories.player)
             entity = config.player
-        elif x == 20:
+        elif room_x_coord == 20:
             config.npc = copy.deepcopy(entity_factories.npc)
             entity = config.npc
 
@@ -99,7 +99,7 @@ class Dungeon:
 
             config.maze_path = MazeSolver.solve_maze(config.maze_raw)
 
-        room = Dungeon(x, y, room_width, room_height)
+        room = Dungeon(room_x_coord, room_y_coord, room_width, room_height)
 
         # fill the room with tiles
         game_map.tiles[room.inner] = maze
