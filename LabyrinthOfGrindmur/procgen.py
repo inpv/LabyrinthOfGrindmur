@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from entity import Entity
 
 
-class Dungeon:
+class ProcGen:
 
     def __init__(self, x: int, y: int, width: int, height: int):
         self.x1 = x
@@ -37,13 +37,11 @@ class Dungeon:
         return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
 
     @staticmethod
-    def generate_maze(room_width, room_height):  # for each maze
-        maze_width = room_width - 1
-        maze_height = room_height - 1
+    def generate_grid(room_width, room_height):
+        return GridGen.get_grid(GridGen(room_width-1, room_height-1))
 
-        grid = GridGen.get_grid(GridGen(maze_width, maze_height))
-        config.maze_raw = grid
-
+    @staticmethod
+    def generate_maze(grid):  # for each maze
         return MazeGen.main(grid)
 
     @staticmethod
@@ -76,7 +74,6 @@ class Dungeon:
         entity = None
 
         # decide which entity to load unto the game map based on the maps' coordinates
-
         if room_x_coord == 0:
             config.player = copy.deepcopy(entity_factories.player)
             entity = config.player
@@ -84,27 +81,26 @@ class Dungeon:
             config.npc = copy.deepcopy(entity_factories.npc)
             entity = config.npc
 
-        # generate the raw game map object
+        # generate the maze grid, solve it for the enemy's maze, then generate the final maze
+        grid = ProcGen.generate_grid(config.room_width, config.room_height)
+        temp_maze = ProcGen.generate_maze(grid)
+        
+        config.maze_counter += 1
+        
+        if config.maze_counter > 1:  # solve only the enemy's maze
+            config.maze_path = MazeSolver.solve_maze(grid)
+            temp_maze = ProcGen.generate_maze(grid)
+
+        # generate the game map object
         game_map = GameMap(map_width, map_height, entities=[entity])
 
-        # generate the mazes to different variables
-        config.maze_left = Dungeon.generate_maze(14, 14)
-        maze = config.maze_left
-        config.maze_counter += 1
-
-        if config.maze_counter > 1:
-            # config.maze_right_raw = GridGen.main(self=GridGen(14, 14))
-            config.maze_right = Dungeon.generate_maze(14, 14)
-            maze = config.maze_right
-
-            config.maze_path = MazeSolver.solve_maze(config.maze_raw)
-
-        room = Dungeon(room_x_coord, room_y_coord, room_width, room_height)
+        # generate the room
+        room = ProcGen(room_x_coord, room_y_coord, room_width, room_height)
 
         # fill the room with tiles
-        game_map.tiles[room.inner] = maze
+        game_map.tiles[room.inner] = temp_maze
 
         # place all the entities
-        Dungeon.place_entities(room, game_map)
+        ProcGen.place_entities(room, game_map)
 
         return game_map

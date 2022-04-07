@@ -5,7 +5,7 @@ import tcod.event
 import color
 import config
 from engine import Engine
-from procgen import Dungeon
+from procgen import ProcGen
 
 FLAGS = tcod.context.SDL_WINDOW_RESIZABLE | tcod.context.SDL_WINDOW_MAXIMIZED
 
@@ -25,6 +25,8 @@ class Tcod:
         self.tileset_columns = 16
         self.tileset_rows = 16
 
+        self.right_maze_move = 20
+
         config.room_width = 14
         config.room_height = 14
 
@@ -42,14 +44,14 @@ class Tcod:
 
         # generating maps with entities
 
-        config.left_room = Dungeon.generate_room(
+        config.left_room = ProcGen.generate_room(
             int(self.map_width / 2),
             self.map_height, config.room_x_coord, config.room_y_coord, config.room_width, config.room_height)
 
         if config.left_room:
-            config.room_x_coord += 20  # moving the enemy labyrinth to the right
+            config.room_x_coord += self.right_maze_move  # moving the enemy labyrinth to the right
 
-        config.right_room = Dungeon.generate_room(
+        config.right_room = ProcGen.generate_room(
             int(self.map_width / 2),
             self.map_height, config.room_x_coord, config.room_y_coord, config.room_width, config.room_height)
 

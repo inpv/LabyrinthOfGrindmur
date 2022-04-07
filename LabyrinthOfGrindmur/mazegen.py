@@ -38,13 +38,14 @@ class MazeGen:
 
                 if self.grid[y][self.width-1] == 0 or self.grid[y][self.width-1] == 1:
                     self.grid[y][self.width-1] = 2
+                """
 
+                # mark the entrance and exit
                 if grid_arr[maze_height - 1][maze_width - 1] == 0:
                     grid_arr[maze_height - 1][maze_width - 1] = 3
 
                 if grid_arr[0][0] == 0:
                     grid_arr[0][0] = 2
-                """
 
                 maze[y][x] = (MazeGen.conv[grid_arr[y][x]])
 

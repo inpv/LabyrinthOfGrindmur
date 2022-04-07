@@ -1,19 +1,17 @@
 # globals shared between functions
 
-maze_raw = []
-maze_transformed = []
+# maze data
+
+maze_counter = 0
 maze_path = []
+
+# room data
 
 left_room = None
 right_room = None
 
 player = None
 npc = None
-
-maze_counter = 0
-
-maze_left = []
-maze_right = []
 
 room_width = 0
 room_height = 0
