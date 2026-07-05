@@ -36,7 +36,7 @@ class Tcod:
         # loading tileset
 
         self.tileset = tcod.tileset.load_tilesheet(
-            Tcod.get_path("rexpaint_cp437_10x10.png"),
+            Tcod.get_path("LabyrinthOfGrindmur/rexpaint_cp437_10x10.png"),
             self.tileset_columns,
             self.tileset_rows,
             tcod.tileset.CHARMAP_CP437
