@@ -11,8 +11,6 @@ a = Analysis(
     pathex=[os.path.join(repo_root, 'LabyrinthOfGrindmur')],
     binaries=[],
     datas=[
-        # Source file, dest folder name INSIDE the bundle — must be
-        # "LabyrinthOfGrindmur" to match the hardcoded path in get_path()
         (
             os.path.join(repo_root, 'LabyrinthOfGrindmur', 'rexpaint_cp437_10x10.png'),
             'LabyrinthOfGrindmur',
