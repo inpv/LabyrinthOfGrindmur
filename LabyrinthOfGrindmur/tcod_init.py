@@ -90,13 +90,13 @@ class Tcod:
 
             while True:
                 # creating the consoles
-                console_main = tcod.Console(width=self.map_width, height=self.map_height, order="F")
+                console_main = tcod.console.Console(width=self.map_width, height=self.map_height, order="F")
 
                 left_width = int(console_main.width / 2)
                 right_width = console_main.width - left_width
 
-                console_left = tcod.Console(width=left_width, height=console_main.height, order="F")
-                console_right = tcod.Console(width=right_width, height=console_main.height, order="F")
+                console_left = tcod.console.Console(width=left_width, height=console_main.height, order="F")
+                console_right = tcod.console.Console(width=right_width, height=console_main.height, order="F")
 
                 self.engine.render(console=console_left)
                 self.engine.render_light(console=console_right)
